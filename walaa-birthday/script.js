@@ -130,6 +130,7 @@
   const state = {
     bloomed: new Set((saved.bloomed || []).filter((k) => validKeys.has(k))),
     storyDone: !!saved.storyDone,
+    storyStarted: !!saved.storyStarted,
     letterRead: !!saved.letterRead,
     surpriseBloomed: !!saved.surpriseBloomed,
     surpriseSeen: !!saved.surpriseSeen,
@@ -139,7 +140,7 @@
     busy: false
   };
   const persist = () => store.set(KEY, {
-    bloomed: Array.from(state.bloomed), storyDone: state.storyDone, letterRead: state.letterRead,
+    bloomed: Array.from(state.bloomed), storyDone: state.storyDone, storyStarted: state.storyStarted, letterRead: state.letterRead,
     surpriseBloomed: state.surpriseBloomed, surpriseSeen: state.surpriseSeen
   });
 
@@ -1251,7 +1252,8 @@
       tree.addEventListener('click', (e) => { e.stopPropagation(); openCertificate(); });
       tree.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCertificate(); } });
       playBtn.addEventListener('click', () => { primeMedia(); goTo('story'); });
-      letterBtn.addEventListener('click', () => goTo('letter'));
+      // Until the letter has been read, the way to it always passes the dua at Fajr.
+      letterBtn.addEventListener('click', () => goTo(duas.length && !state.letterRead ? 'dua' : 'letter'));
       world.addEventListener('scroll', () => { if (performance.now() - laidOutAt > 600) hint.classList.remove('is-in'); }, { passive: true });
       // tapping the open sky
       world.addEventListener('click', (e) => {
@@ -1426,7 +1428,9 @@
       const need = Math.max(1, Math.min(Number(CFG.unlockAfter) || 3, groups.length));
       const unlocked = state.bloomed.size >= need || groups.length === 0;
       if (unlocked && playBtn.hidden) revealPlay(state.scene === 'garden' && !revealedPlay);
-      letterBtn.hidden = !state.storyDone;
+      // The letter appears once the story has been started, so closing the
+      // story early never hides it.
+      letterBtn.hidden = !(state.storyDone || state.storyStarted);
     }
 
     function revealPlay(rise) {
@@ -1955,6 +1959,7 @@
     function start(from) {
       stop(true);
       running = true; finishing = false; paused = false; holdPaused = false;
+      if (!state.storyStarted) { state.storyStarted = true; persist(); }
       sec.classList.remove('is-paused');
       black.classList.remove('is-in');
       stage.querySelectorAll('.slide').forEach((n) => n.remove());
