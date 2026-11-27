@@ -107,10 +107,11 @@ const CONFIG = {
   ],
 
   letter: [
-    "Habibti,",
-    "Today the whole garden blooms for you. Every flower here is a day we lived in Valencia, and every one of them still feels close enough to touch.",
-    "You study how living things grow, so you already know the secret: the strongest roots grow slowly, quietly, and they last. That is why your olive tree is in the middle of this garden. It is us.",
-    "Thank you for every smile, every walk, and every Fajr you wake me for. I cannot wait for all the seasons still ahead of us, and for the day I call you Dr. Walaa.",
+    "Dear Walaa, my love, my everything, the barakah of my life,",
+    "You are the person I want to wake up to every day. I am the happiest when I am with you, or on the phone with you.",
+    "This is the first phase of our journey, and I promise there will be so much more. I keep praying that Allah marries us soon, so that we can start our life together. I promise you that I will take care of you and love you every minute.",
+    "You are a barakah in my life. You brought the colours back, and my peace of mind is at its peak.",
+    "Walaa, you are an absolutely amazing woman, and I am so proud of you, wallahi.",
     "كل عام وأنتِ بخير يا حبيبتي، وكل عام وأنتِ أجمل ما في حياتي.",
     "Happy birthday, my love."
   ],
