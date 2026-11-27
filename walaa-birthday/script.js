@@ -76,33 +76,41 @@
   const VIDEO_RE = /\.(mp4|m4v|mov|webm|ogv)([?#].*)?$/i;
   const FLOWERS = ['orange-blossom', 'rose', 'jasmine', 'tulip', 'lavender'];
 
+  // The story plays every memory in date order (when "date" is given, else in
+  // config order). Memories with highlight: true are the seeds in the garden.
   const memories = (Array.isArray(CFG.memories) ? CFG.memories : [])
     .filter((m) => m && typeof m.src === 'string' && m.src.trim())
-    .map((m, i) => ({
+    .map((m, k) => ({ m, k, t: m.date ? Date.parse(m.date) : NaN }))
+    .sort((a, b) => (isNaN(a.t) || isNaN(b.t)) ? a.k - b.k : (a.t - b.t) || (a.k - b.k))
+    .map(({ m }, i) => ({
       i,
       src: m.src.trim(),
       poster: m.poster || '',
       day: m.day || '',
       place: m.place || '',
       caption: m.caption || '',
+      highlight: !!m.highlight,
       type: (m.type === 'video' || m.type === 'image') ? m.type : (VIDEO_RE.test(m.src) ? 'video' : 'image'),
       flower: FLOWERS.indexOf(m.flower) > -1 ? m.flower : FLOWERS[i % FLOWERS.length]
     }));
 
   const broken = new Set(); // memory indices that failed to load
 
+  // Garden seeds: only the highlights when any are marked, otherwise everything.
+  const gardenMemories = memories.some((m) => m.highlight) ? memories.filter((m) => m.highlight) : memories;
+
   // One seed per memory, or one seed per day when there are more than 10.
   const groups = (function () {
     const out = [];
-    if (memories.length > 10) {
+    if (gardenMemories.length > 10) {
       const map = new Map();
-      memories.forEach((m) => {
+      gardenMemories.forEach((m) => {
         const k = 'd:' + (m.day || ('#' + m.i)).trim().toLowerCase();
         if (!map.has(k)) { const g = { key: k, items: [] }; map.set(k, g); out.push(g); }
         map.get(k).items.push(m);
       });
     } else {
-      memories.forEach((m) => out.push({ key: 'm:' + m.src + '#' + m.i, items: [m] }));
+      gardenMemories.forEach((m) => out.push({ key: 'm:' + m.src, items: [m] }));
     }
     out.forEach((g, gi) => { g.gi = gi; g.flower = g.items[0].flower; g.day = g.items[0].day; g.place = g.items[0].place; });
     return out;
@@ -1414,7 +1422,7 @@
     }
 
     function updateCounter() {
-      counter.textContent = memories.length ? TEXT.counter.replace('{n}', bloomedMemoryCount()).replace('{total}', memories.length) : '';
+      counter.textContent = gardenMemories.length ? TEXT.counter.replace('{n}', bloomedMemoryCount()).replace('{total}', gardenMemories.length) : '';
       const need = Math.max(1, Math.min(Number(CFG.unlockAfter) || 3, groups.length));
       const unlocked = state.bloomed.size >= need || groups.length === 0;
       if (unlocked && playBtn.hidden) revealPlay(state.scene === 'garden' && !revealedPlay);

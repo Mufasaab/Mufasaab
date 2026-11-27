@@ -27,7 +27,7 @@ walaa-birthday/
    and overwrite them. Any names work, as long as `config.js` matches.
 3. Recommended sizes (so it loads fast on a phone): photos about 1600–2000 px on the long side and under 1 MB;
    videos 1080p or 720p, under 20 MB, ideally under 20 seconds.
-4. Replace `media/olive-certificate.jpg` with a photo or scan of the real olive-tree certificate.
+4. Put a photo or scan of the real olive-tree certificate in `media/` (e.g. `media/olive-certificate.jpg`) and set `oliveCertificate` in `config.js` to that path.
 5. Delete placeholder files you no longer use.
 
 ## 2. Edit `config.js`
