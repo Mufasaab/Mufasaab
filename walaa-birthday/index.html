@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c1f27">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="robots" content="noindex">
+  <title>Happy Birthday, Habibti</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg transform='translate(32 32)'%3E%3Cg fill='%23fbf5ea'%3E%3Cellipse cy='-14' rx='8' ry='14'/%3E%3Cellipse cy='-14' rx='8' ry='14' transform='rotate(72)'/%3E%3Cellipse cy='-14' rx='8' ry='14' transform='rotate(144)'/%3E%3Cellipse cy='-14' rx='8' ry='14' transform='rotate(216)'/%3E%3Cellipse cy='-14' rx='8' ry='14' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='6' fill='%23e3a23f'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Dancing+Script:wght@400;500&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient particles (petals, motes, fireflies) drawn on canvas -->
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <!-- ============ Scene 1: Intro ============ -->
+  <section id="intro" class="scene" aria-label="Birthday greeting">
+    <div class="intro-sky" aria-hidden="true"></div>
+    <div class="intro-inner">
+      <h1 id="introTitle" class="intro-title" dir="auto"></h1>
+      <p id="introSub" class="intro-sub" dir="auto"></p>
+    </div>
+    <button id="tapEnter" class="tap-enter" type="button"></button>
+  </section>
+
+  <!-- ============ Scene 2: Memory garden ============ -->
+  <section id="garden" class="scene" aria-label="Memory garden">
+    <div class="garden-sky" aria-hidden="true">
+      <div class="stars"></div>
+      <div class="horizon-glow"></div>
+      <svg class="skyline" viewBox="0 0 1200 160" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <!-- a soft, abstract Valencia skyline: palms, a white dome, long curved roofs -->
+        <g fill="#10262c" opacity=".7">
+          <path d="M0 160v-22c90-4 170-6 250-4 60 2 110 6 160 6h790v20Z"/>
+          <path d="M470 142c18-34 56-54 104-54s86 20 104 54Z"/>
+          <path d="M700 142c30-46 86-74 156-80l8 6c-58 10-104 34-132 74Z"/>
+          <path d="M860 142c4-14 30-24 70-26 46-2 84 8 96 26Z"/>
+        </g>
+        <g stroke="#10262c" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round">
+          <path d="M150 140c1-28 4-48 11-68"/><path d="M1080 140c-1-30-5-52-12-74"/><path d="M330 140c1-18 3-32 8-46"/>
+        </g>
+        <g fill="#10262c" opacity=".7">
+          <path d="M161 72c-14-6-30-4-42 6 14-2 28 0 42-6Zm0 0c10-12 26-16 40-12-14 2-28 6-40 12Zm0 0c-4-12-16-20-28-20 10 6 20 12 28 20Zm0 0c12-4 26 0 34 10-12-4-24-8-34-10Z"/>
+          <path d="M1068 66c-14-6-30-4-42 6 14-2 28 0 42-6Zm0 0c10-12 26-16 40-12-14 2-28 6-40 12Zm0 0c-4-12-16-20-28-20 10 6 20 12 28 20Zm0 0c12-4 26 0 34 10-12-4-24-8-34-10Z"/>
+          <path d="M338 94c-10-5-22-3-30 4 10-1 20 0 30-4Zm0 0c8-9 19-11 29-8-10 1-20 4-29 8Zm0 0c-3-9-12-14-20-14 7 4 14 9 20 14Z"/>
+        </g>
+      </svg>
+    </div>
+
+    <header class="garden-head">
+      <h2 class="garden-title" id="gardenTitle" dir="auto"></h2>
+      <p class="garden-hint" id="gardenHint" dir="auto"></p>
+      <div class="garden-actions">
+        <button id="playStory" class="glow-btn" type="button" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+          <span></span>
+        </button>
+        <button id="openLetter" class="ghost-btn" type="button" hidden><span></span></button>
+      </div>
+    </header>
+
+    <div id="gardenWorld" class="garden-world">
+      <div id="gardenInner" class="garden-inner">
+        <svg id="groundSvg" class="ground" aria-hidden="true"></svg>
+        <div id="tree" class="tree" role="button" tabindex="0">
+          <div class="tree-glow" aria-hidden="true"></div>
+          <svg id="treeSvg" viewBox="0 0 240 230" aria-hidden="true"></svg>
+          <span class="tree-label" id="treeLabel"></span>
+          <div class="tree-note" id="treeNote" role="status" dir="auto"></div>
+        </div>
+        <div id="seeds" class="seeds"></div>
+      </div>
+    </div>
+    <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span></span>
+    </div>
+    <p class="garden-counter" id="counter" aria-live="polite"></p>
+  </section>
+
+  <!-- Memory card (bottom sheet on phones, modal on desktop) -->
+  <div id="card" class="card" hidden>
+    <div class="card-backdrop" data-close></div>
+    <article class="card-sheet" role="dialog" aria-modal="true" aria-labelledby="cardMeta">
+      <div class="card-grip" aria-hidden="true"><span></span></div>
+      <button class="icon-btn card-close" type="button" aria-label="Close" data-close>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <div class="card-stage" id="cardStage"><div class="card-track" id="cardTrack"></div></div>
+      <div class="card-dots" id="cardDots"></div>
+      <div class="card-text">
+        <p class="card-meta" id="cardMeta" dir="auto"></p>
+        <p class="card-caption" id="cardCaption" dir="auto"></p>
+      </div>
+    </article>
+  </div>
+
+  <!-- ============ Scene 3: Our story ============ -->
+  <section id="story" class="scene" aria-label="Our story">
+    <div class="story-stage" id="stage"></div>
+    <div class="story-shade" aria-hidden="true"></div>
+    <div class="story-caption" id="storyCaption" aria-live="polite">
+      <p class="story-meta" dir="auto"></p>
+      <p class="story-text" dir="auto"></p>
+    </div>
+    <div class="story-top">
+      <div class="story-bars" id="bars"></div>
+      <div class="story-tools">
+        <span class="story-paused" id="pausedTag" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </span>
+        <button class="icon-btn" id="muteBtn" type="button" aria-label="Sound">
+          <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M16 9.5l5 5M21 9.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-btn" id="exitStory" type="button" aria-label="Back to the garden">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <button class="sound-hint" id="soundHint" type="button" hidden></button>
+    </div>
+    <div class="story-black" id="storyBlack" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============ Scene 4: The letter ============ -->
+  <section id="letter" class="scene" aria-label="A letter for you">
+    <div class="letter-bg" aria-hidden="true"></div>
+    <button class="icon-btn letter-mute" id="letterMute" type="button" aria-label="Sound" hidden>
+      <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M16 9.5l5 5M21 9.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="envelope-wrap" id="envelopeWrap">
+      <button class="envelope" id="envelope" type="button" aria-label="Open the letter">
+        <span class="env-back"></span>
+        <span class="env-paper"><span class="env-paper-lines"></span></span>
+        <span class="env-front"></span>
+        <span class="env-flap"><span class="env-flap-inner"></span></span>
+        <span class="env-seal" aria-hidden="true">
+          <svg class="seal-l" viewBox="0 0 80 80"><use href="#sealArt"/></svg>
+          <svg class="seal-r" viewBox="0 0 80 80"><use href="#sealArt"/></svg>
+        </span>
+      </button>
+      <p class="letter-hint" id="letterHint"></p>
+    </div>
+
+    <div class="paper" id="paper" aria-hidden="true">
+      <div class="paper-fold paper-mid"></div>
+      <div class="paper-fold paper-top"></div>
+      <div class="paper-fold paper-bot"></div>
+      <div class="paper-scroll" id="paperScroll">
+        <div class="paper-content">
+          <div class="paper-ornament" aria-hidden="true">
+            <svg viewBox="0 0 160 24"><path d="M4 12h56M100 12h56" stroke="#b08a45" stroke-width=".8"/><g transform="translate(80 12)" fill="#c58a3a"><ellipse cy="-6" rx="3" ry="6"/><ellipse cy="-6" rx="3" ry="6" transform="rotate(72)"/><ellipse cy="-6" rx="3" ry="6" transform="rotate(144)"/><ellipse cy="-6" rx="3" ry="6" transform="rotate(216)"/><ellipse cy="-6" rx="3" ry="6" transform="rotate(288)"/><circle r="2.2" fill="#8a5a1c"/></g></svg>
+          </div>
+          <div id="letterBody" class="letter-body"></div>
+          <p id="signature" class="signature" dir="auto"></p>
+          <div class="letter-actions" id="letterActions">
+            <button class="paper-btn" id="toGarden" type="button"></button>
+            <button class="paper-btn solid" id="watchAgain" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading state -->
+  <div id="loader" class="loader" role="status">
+    <svg class="loader-flower" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="lf-stem" d="M50 96 C 50 80, 46 70, 50 52" />
+      <path class="lf-leaf" d="M49 78 C 38 74, 34 66, 36 62 C 44 64, 48 70, 49 78Z" />
+      <g class="lf-bloom">
+        <g transform="translate(50 42)">
+          <ellipse class="lf-p" cy="-11" rx="6.5" ry="11"/><ellipse class="lf-p" cy="-11" rx="6.5" ry="11" transform="rotate(72)"/>
+          <ellipse class="lf-p" cy="-11" rx="6.5" ry="11" transform="rotate(144)"/><ellipse class="lf-p" cy="-11" rx="6.5" ry="11" transform="rotate(216)"/>
+          <ellipse class="lf-p" cy="-11" rx="6.5" ry="11" transform="rotate(288)"/><circle r="4.5" fill="#e3a23f"/>
+        </g>
+      </g>
+    </svg>
+    <p class="loader-text" id="loaderText"></p>
+  </div>
+
+  <noscript><p class="noscript">This little garden needs JavaScript to bloom.</p></noscript>
+
+  <!-- Shared SVG symbols -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="waxGrad" cx=".38" cy=".32" r=".75">
+        <stop offset="0" stop-color="#f3d58b"/><stop offset=".45" stop-color="#c99536"/><stop offset="1" stop-color="#7d5516"/>
+      </radialGradient>
+      <radialGradient id="seedGlow">
+        <stop offset="0" stop-color="#ffe7a8" stop-opacity=".95"/><stop offset=".35" stop-color="#f5c46a" stop-opacity=".45"/><stop offset="1" stop-color="#f5c46a" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="seedBody" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fff0c4"/><stop offset="1" stop-color="#d49b3c"/>
+      </linearGradient>
+      <symbol id="sealArt" viewBox="0 0 80 80">
+        <path d="M40 4c6 0 8 4 13 5s9-1 12 3 1 8 4 12 7 6 7 12-4 8-5 13 1 9-3 12-8 1-12 4-6 7-12 7-8-4-13-5-9 1-12-3-1-8-4-12-7-6-7-12 4-8 5-13-1-9 3-12 8-1 12-4 6-7 12-7z" fill="url(#waxGrad)"/>
+        <circle cx="40" cy="40" r="23" fill="none" stroke="#7a5214" stroke-opacity=".45" stroke-width="1.4"/>
+        <path d="M40 54c-9-6-16-11-16-18a7.5 7.5 0 0 1 16-3 7.5 7.5 0 0 1 16 3c0 7-7 12-16 18z" fill="#8c5d17" fill-opacity=".55"/>
+        <path d="M40 52.5c-8.4-5.6-14.6-10.2-14.6-16.5a6.4 6.4 0 0 1 14.6-2.5 6.4 6.4 0 0 1 14.6 2.5c0 6.3-6.2 10.9-14.6 16.5z" fill="#f2cf7c" fill-opacity=".35"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
