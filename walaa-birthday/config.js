@@ -32,7 +32,7 @@ const CONFIG = {
   metAt: "2026-11-13T12:15:00+01:00",   // our first hug (live counter in the garden)
   metPlace: "Castellón airport",
 
-  oliveCertificate: "",   // TODO: put the real certificate photo in media/ and write its path here, e.g. "media/olive-certificate.jpg"
+  oliveCertificate: "media/olive-certificate.jpg",
   surprise: "See you soon, habibti",
 
   photoSeconds: 6,        // how long each photo stays in "Our story"
@@ -131,7 +131,7 @@ const CONFIG = {
     sinceLabel: "Since our first hug at {place}",
     treeLabel: "Your olive tree",
     certificateTitle: "Planted in your name, growing for you.",
-    certificateMeta: "Sadaqah jariyah · your olive tree",
+    certificateMeta: "Sadaqah jariyah · your olive tree in Palestine",
     counter: "{n} of {total} memories bloomed",
     playStory: "Our story, from the beginning",
     openLetter: "Open your letter",
